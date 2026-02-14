@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:menuapp/screens/restaurantmenu_screen.dart';
+import 'package:menuapp/screens/splash_screen.dart';
 
 
 void main() {
@@ -14,7 +14,7 @@ class MenuAPP extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: RestaurantMenuScreen(),
+      home: SplashScreen(),
     );
   }
 }
