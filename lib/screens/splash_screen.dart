@@ -1,206 +1,202 @@
 import 'package:flutter/material.dart';
-import 'package:menuapp/screens/restaurantmenu_screen.dart';
+import 'package:menuapp/models/bgimage_model.dart';
+import 'package:menuapp/widgets/blob.dart';
+import 'package:menuapp/widgets/float_image.dart';
+import 'restaurantmenu_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
-  late AnimationController _mainController;
-  late AnimationController _bgController;
-  late AnimationController _progressController; 
+  late AnimationController _logoController;
+  late AnimationController _textController;
+  late AnimationController _floatController;
 
-  late Animation<double> _logoScale;
-  late Animation<double> _logoOpacity;
-  late Animation<double> _logoRotation;
-  late Animation<Offset> _textSlide;
-  late Animation<double> _textOpacity;
-  late Animation<double> _progressAnimation;
+  late List<FloatingBgImage> bgImages;
 
   @override
   void initState() {
     super.initState();
 
-    // Initialize progress controller first
-    _progressController = AnimationController(
+    _logoController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 3), // Match main controller duration
-    );
-
-    // Main animation controller
-    _mainController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 3),
-    );
-
-    // Background animation controller
-    _bgController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 6),
+      duration: const Duration(seconds: 2),
+      lowerBound: 0.9,
+      upperBound: 1.1,
     )..repeat(reverse: true);
 
-    // Logo animations
-    _logoScale = Tween<double>(begin: 0.6, end: 1.0).animate(
-      CurvedAnimation(parent: _mainController, curve: Curves.easeOutBack),
+    _textController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 5),
     );
+    Future.delayed(const Duration(milliseconds: 1500), () {
+      _textController.forward();
+    });
 
-    _logoOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _mainController, curve: Curves.easeIn),
-    );
+    _floatController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 4),
+    )..repeat(reverse: true);
 
-    _logoRotation = Tween<double>(begin: -0.05, end: 0.0).animate(
-      CurvedAnimation(parent: _mainController, curve: Curves.easeOut),
-    );
+    bgImages = [];
 
-    // Progress animation - now using _progressController which is initialized
-    _progressAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _progressController, // Use the progress controller
-        curve: Curves.easeInOut,
-      ),
-    );
-
-    // Text animations
-    _textSlide = Tween<Offset>(
-      begin: const Offset(0, 1),
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(parent: _mainController, curve: Curves.easeOut),
-    );
-
-    _textOpacity = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _mainController, curve: Curves.easeIn),
-    );
-
-    // Start both animations
-    _mainController.forward();
-    _progressController.forward(); // Start the progress animation
-
-    Future.delayed(const Duration(seconds: 4), () {
-      if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          PageRouteBuilder(
-            transitionDuration: const Duration(milliseconds: 800),
-            pageBuilder: (_, __, ___) => const RestaurantMenuScreen(),
-            transitionsBuilder: (_, animation, __, child) {
-              return FadeTransition(opacity: animation, child: child);
-            },
-          ),
-        );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      double screenWidth = MediaQuery.of(context).size.width;
+      for (var img in leftImages) {
+        bgImages.add(img);
+        bgImages.add(FloatingBgImage(
+          imagePath: img.imagePath,
+          top: img.top,
+          left: screenWidth - img.left! - img.width,
+          width: img.width,
+          height: img.height,
+          opacity: img.opacity,
+          dx: img.dx,
+          dy: img.dy,
+        ));
       }
+      setState(() {});
+    });
+
+    Future.delayed(const Duration(seconds: 10), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => RestaurantMenuScreen()),
+      );
     });
   }
 
   @override
   void dispose() {
-    _mainController.dispose();
-    _bgController.dispose();
-    _progressController.dispose(); // Don't forget to dispose
+    _logoController.dispose();
+    _textController.dispose();
+    _floatController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AnimatedBuilder(
-        animation: _bgController,
-        builder: (context, child) {
-          return Container(
-            decoration: BoxDecoration(
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          // Fond dégradé
+          Container(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [
-                  Color.lerp(
-                      const Color(0xFFFF7300),
-                      Colors.deepOrange,
-                      _bgController.value)!,
-                  Color.lerp(
-                      const Color.fromARGB(255, 241, 7, 7),
-                      const Color.fromARGB(255, 233, 60, 8),
-                      _bgController.value)!,
-                  Color.lerp(
-                      Colors.black,
-                      Colors.grey.shade900,
-                      _bgController.value)!,
-                ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-              ),
-            ),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FadeTransition(
-                    opacity: _logoOpacity,
-                    child: ScaleTransition(
-                      scale: _logoScale,
-                      child: RotationTransition(
-                        turns: _logoRotation,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.orange.withOpacity(0.6),
-                                blurRadius: 40,
-                                spreadRadius: 5,
-                              ),
-                            ],
-                          ),
-                          child: const CircleAvatar(
-                            radius: 90,
-                            backgroundColor: Colors.black,
-                            child: Image(
-                              image: AssetImage('1770927184067.png'),
-                              height: 160,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-                  SlideTransition(
-                    position: _textSlide,
-                    child: FadeTransition(
-                      opacity: _textOpacity,
-                      child: const Text(
-                        'FRAIS CHAUD',
-                        style: TextStyle(
-                          fontSize: 38,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          letterSpacing: 2,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 50),
-                  SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: AnimatedBuilder(
-                      animation: _progressAnimation,
-                      builder: (context, child) {
-                        return CircularProgressIndicator(
-                          value: _progressAnimation.value,
-                          backgroundColor: Colors.grey[500],
-                          valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
-                        );
-                      },
-                    ),
-                  ),
+                colors: [
+                  Color.fromARGB(255, 54, 7, 7),
+                  Color.fromARGB(255, 19, 19, 18),
+                  Color.fromARGB(255, 27, 2, 1),
                 ],
               ),
             ),
-          );
-        },
+          ),
+
+          // Blobs animés (coins)
+          buildBlob(
+              top: -80,
+              left: -80,
+              controller: _floatController,
+              color: Colors.orangeAccent.withOpacity(0.3)),
+          buildBlob(
+              bottom: -80,
+              right: -80,
+              controller: _floatController,
+              color: Colors.redAccent.withOpacity(0.2)),
+
+          // Images flottantes
+          for (var bg in bgImages)
+            AnimatedBuilder(
+              animation: _floatController,
+              builder: (context, child) {
+                return Positioned(
+                  top: bg.top + bg.dy * _floatController.value,
+                  left: bg.left! + bg.dx * _floatController.value,
+                  child: Opacity(
+                    opacity: bg.opacity,
+                    child: Image.asset(
+                      bg.imagePath,
+                      width: bg.width,
+                      height: bg.height,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                );
+              },
+            ),
+
+          // Logo + texte + loader
+          Positioned(
+            top: 80,
+            left: 0,
+            right: 0,
+            child: Column(
+              children: [
+                ScaleTransition(
+                  scale: _logoController,
+                  child: ClipOval(
+                    child: Image.asset(
+                      "logo.png",
+                      height: 200,
+                      width: 200,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                FadeTransition(
+                  opacity: _textController,
+                  child: Text(
+                    "MENU LE FRAIS CHAUD",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.luckiestGuy(
+                      fontSize: 36,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 2,
+                      foreground: Paint()
+                        ..shader = LinearGradient(
+                          colors: [Colors.orangeAccent, Colors.redAccent],
+                        ).createShader(
+                          Rect.fromLTWH(
+                              0, 0, MediaQuery.of(context).size.width, 70),
+                        ),
+                      shadows: [
+                        Shadow(
+                          color: Colors.black.withOpacity(0.4),
+                          offset: const Offset(2, 2),
+                          blurRadius: 4,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 40),
+                SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: CircularProgressIndicator(
+                    color: Colors.orangeAccent,
+                    strokeWidth: 5,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 }
+
+
+
+
