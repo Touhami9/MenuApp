@@ -54,7 +54,7 @@ class FoodCard extends StatelessWidget {
                       image,
                       width: constraints.maxWidth * 0.45,
                       height: constraints.maxHeight,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),

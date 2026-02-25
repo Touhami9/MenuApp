@@ -71,6 +71,52 @@ flutter:
     - assets/images/bg7.png
     - assets/images/bg8.png
     - assets/images/logo1.png
+    - assets/product/tira.png
+    - assets/product/pat_or.png
+    - assets/product/thé.png
+    - assets/product/redbull.png
+    - assets/product/pepsi.png
+    - assets/product/coca.png
+    - assets/product/eau.png
+    - assets/product/samourai.png
+    - assets/product/ketchup.png
+    - assets/product/mayonaise.png
+    - assets/product/harissa.png
+    - assets/product/blanche.png
+    - assets/product/biggy.png
+    - assets/product/américain.png
+    - assets/product/baberocue.png
+    - assets/product/andalouse.png
+    - assets/product/royalsteak.png
+    - assets/product/royalkebab.png
+    - assets/product/kefta.png
+    - assets/product/kebab.png
+    - assets/product/flafel.png
+    - assets/product/chicken.png
+    - assets/product/américain.png
+    - assets/product/campnard.png
+    - assets/product/bledard.png
+    - assets/product/panchiken.png
+    - assets/product/panfromag.png
+    - assets/product/pankebab.png
+    - assets/product/pannutella.png
+    - assets/product/pansteak.png
+    - assets/product/barcalmar.png
+    - assets/product/barfrites.png
+    - assets/product/barviand.png
+    - assets/product/texchiken.png
+    - assets/product/texnugget.png
+    - assets/product/texchiken.png
+    - assets/product/burger.png
+    - assets/product/fritesenfant.png
+    - assets/product/capri.png
+    - assets/product/Asteak.png
+    - assets/product/Amixte.png
+    - assets/product/Achiken.png
+    - assets/product/Akebab.png
+    - assets/product/ssteak.png
+    - assets/product/oeuf.png
+    - assets/product/cheddar.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

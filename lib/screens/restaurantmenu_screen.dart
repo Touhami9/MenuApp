@@ -5,6 +5,7 @@ import 'package:menuapp/models/food_model.dart';
 import 'package:menuapp/widgets/blob.dart';
 import 'package:menuapp/widgets/float_image.dart';
 import 'package:menuapp/widgets/food_card.dart';
+import 'package:menuapp/widgets/tacos_builder_section.dart';
 
 class RestaurantMenuScreen extends StatefulWidget {
   const RestaurantMenuScreen({super.key});
@@ -32,6 +33,8 @@ final List<Category> categories = [
   Category(name: "Desserts", icon: Icons.icecream),
   Category(name: "Boissons", icon: Icons.local_drink),
   Category(name: "Sauces", icon: Icons.soup_kitchen),
+  Category(name: "Nos Assiettes", icon: Icons.restaurant),
+  Category(name: "Menu Enfant", icon: Icons.child_care),
   Category(name: "Suppléments", icon: Icons.add_circle),
 ];
 
@@ -39,188 +42,240 @@ final List<Category> categories = [
     "Sandwichs": [
       FoodItem(
         name: "Kebab",
-        image: foodImg,
+        image: "assets/product/kebab.png",
         priceSolo: "7.00 €",
         priceFries: "7.50 €",
         priceMenu: "8.00 €",
       ),
       FoodItem(
         name: "Américain",
-        image: foodImg,
+        image: "assets/product/américain.png",
         priceSolo: "7.00 €",
         priceFries: "7.50 €",
         priceMenu: "8.00 €",
       ),
       FoodItem(
         name: "Kefta",
-        image: foodImg,
+        image: "assets/product/kefta.png",
         priceSolo: "7.00 €",
         priceFries: "7.50 €",
         priceMenu: "8.00 €",
       ),
       FoodItem(
         name: "Chicken",
-        image: foodImg,
+        image: "assets/product/chicken.png",
         priceSolo: "8.00 €",
         priceFries: "8.50 €",
         priceMenu: "9.00 €",
       ),
       FoodItem(
         name: "Royal Steak",
-        image: foodImg,
+        image: "assets/product/royalsteak.png",
         priceSolo: "8.00 €",
         priceFries: "8.50 €",
         priceMenu: "9.00 €",
       ),
       FoodItem(
         name: "Royal Kebab",
-        image: foodImg,
+        image: "assets/product/royalkebab.png",
         priceSolo: "8.00 €",
         priceFries: "8.50 €",
         priceMenu: "9.00 €",
       ),
       FoodItem(
         name: "Bledard",
-        image: foodImg,
+        image: "assets/product/bledard.png",
         priceSolo: "9.00 €",
         priceFries: "9.50 €",
         priceMenu: "10.00 €",
       ),
       FoodItem(
         name: "Campagnard",
-        image: foodImg,
+        image: "assets/product/campnard.png",
         priceSolo: "7.00 €",
         priceFries: "7.50 €",
         priceMenu: "8.00 €",
       ),
       FoodItem(
         name: "Falafel",
-        image: foodImg,
+        image: "assets/product/flafel.png",
         priceSolo: "7.00 €",
         priceFries: "7.50 €",
         priceMenu: "8.00 €",
       ),
     ],
-    "Tacos": [
-      FoodItem(
-        name: "Le Classic",
-        image: foodImg,
-        priceSolo: "8.00 €",
-        priceFries: "8.50 €",
-        priceMenu: "9.00 €",
-      ),
-      FoodItem(
-        name: "L'Italiano",
-        image: foodImg,
-        priceSolo: "10.00 €",
-        priceFries: "10.50 €",
-        priceMenu: "11.00 €",
-      ),
-      FoodItem(
-        name: "Kirikou",
-        image: foodImg,
-        priceSolo: "10.00 €",
-        priceFries: "10.50 €",
-        priceMenu: "11.00 €",
-      ),
-      FoodItem(
-        name: "Végétarien",
-        image: foodImg,
-        priceSolo: "8.50 €",
-        priceFries: "9.00 €",
-        priceMenu: "9.50 €",
-      ),
-      FoodItem(
-        name: "Falafel",
-        image: foodImg,
-        priceSolo: "8.50 €",
-        priceFries: "9.00 €",
-        priceMenu: "9.50 €",
-      ),
-      FoodItem(
-        name: "Le Fermier",
-        image: foodImg,
-        priceSolo: "10.00 €",
-        priceFries: "10.50 €",
-        priceMenu: "11.00 €",
-      ),
-    ],
+    // "Tacos": [
+    //   FoodItem(
+    //     name: "Le Classic",
+    //     image: foodImg,
+    //     priceSolo: "8.00 €",
+    //     priceFries: "8.50 €",
+    //     priceMenu: "9.00 €",
+    //   ),
+    //   FoodItem(
+    //     name: "L'Italiano",
+    //     image: foodImg,
+    //     priceSolo: "10.00 €",
+    //     priceFries: "10.50 €",
+    //     priceMenu: "11.00 €",
+    //   ),
+    //   FoodItem(
+    //     name: "Kirikou",
+    //     image: foodImg,
+    //     priceSolo: "10.00 €",
+    //     priceFries: "10.50 €",
+    //     priceMenu: "11.00 €",
+    //   ),
+    //   FoodItem(
+    //     name: "Végétarien",
+    //     image: foodImg,
+    //     priceSolo: "8.50 €",
+    //     priceFries: "9.00 €",
+    //     priceMenu: "9.50 €",
+    //   ),
+    //   FoodItem(
+    //     name: "Falafel",
+    //     image: foodImg,
+    //     priceSolo: "8.50 €",
+    //     priceFries: "9.00 €",
+    //     priceMenu: "9.50 €",
+    //   ),
+    //   FoodItem(
+    //     name: "Le Fermier",
+    //     image: foodImg,
+    //     priceSolo: "10.00 €",
+    //     priceFries: "10.50 €",
+    //     priceMenu: "11.00 €",
+    //   ),
+    // ],
     "Paninis": [
       FoodItem(
         name: "Kebab",
-        image: foodImg,
+        image: "assets/product/pankebab.png",
         priceSolo: "6.50 €",
         priceFries: "7.00 €",
         priceMenu: "7.50 €",
       ),
       FoodItem(
         name: "Steak",
-        image: foodImg,
+        image: "assets/product/pansteak.png",
         priceSolo: "6.50 €",
         priceFries: "7.00 €",
         priceMenu: "7.50 €",
       ),
       FoodItem(
         name: "Chicken",
-        image: foodImg,
+        image: "assets/product/panchiken.png",
         priceSolo: "6.50 €",
         priceFries: "7.00 €",
         priceMenu: "7.50 €",
       ),
       FoodItem(
         name: "Trois Fromages",
-        image: foodImg,
+        image: "assets/product/panfromag.png",
         priceSolo: "6.50 €",
         priceFries: "7.00 €",
         priceMenu: "7.50 €",
       ),
       FoodItem(
         name: "Nutella",
-        image: foodImg,
+        image: "assets/product/pannutella.png",
         priceSolo: "5.50 €",
         priceFries: "6.00 €",
         priceMenu: "6.50 €",
       ),
     ],
     "Tex-Mex": [
-      FoodItem(name: "Chicken Wings (6)", price: "8.50 €", image: foodImg),
-      FoodItem(name: "Nuggets (6)", price: "6.50 €", image: foodImg),
-      FoodItem(name: "Tenders (6)", price: "8.50 €", image: foodImg),
-      FoodItem(name: "Menu Enfant", price: "8.00 €", image: foodImg),
+      FoodItem(name: "Chicken Wings (6)", price: "8.50 €", image: "assets/product/texchiken.png"),
+      FoodItem(name: "Nuggets (6)", price: "6.50 €", image: "assets/product/texnugget.png"),
+      FoodItem(name: "Tenders (6)", price: "8.50 €", image: "assets/product/textenders.png"),
     ],
     "Barquettes": [
-      FoodItem(name: "Frites", price: "3.50 €", image: foodImg),
-      FoodItem(name: "Viande", price: "6.50 €", image: foodImg),
-      FoodItem(name: "Calamar d'oignons", price: "6.50 €", image: foodImg),
+      FoodItem(name: "Frites", price: "3.50 €", image: "assets/product/barfrites.png"),
+      FoodItem(name: "Viande", price: "6.50 €", image: "assets/product/barviand.png"),
+      FoodItem(name: "Calamar d'oignons", price: "6.50 €", image: "assets/product/barcalmar.png"),
     ],
     "Desserts": [
-      FoodItem(name: "Tiramisu", price: "3.50 €", image: foodImg),
-      FoodItem(name: "Pâtisserie Orientale", price: "2.50 €", image: foodImg),
+      FoodItem(name: "Tiramisu", price: "3.50 €", image: "assets/product/tira.png"),
+      FoodItem(name: "Pâtisserie Orientale", price: "2.50 €", image: "assets/product/pat_or.png"),
     ],
     "Boissons": [
-      FoodItem(name: "Canette 33cl", price: "2.30 €", image: foodImg),
-      FoodItem(name: "Boisson 50cl", price: "3.50 €", image: foodImg),
-      FoodItem(name: "Eau 33cl", price: "2.00 €", image: foodImg),
-      FoodItem(name: "Red Bull", price: "3.50 €", image: foodImg),
-      FoodItem(name: "Thé", price: "2.00 €", image: foodImg),
+      FoodItem(name: "Canette 33cl", price: "2.30 €", image: "assets/product/coca.png"),
+      FoodItem(name: "Boisson 50cl", price: "3.50 €", image: "assets/product/pepsi.png"),
+      FoodItem(name: "Eau 33cl", price: "2.00 €", image: "assets/product/eau.png"),
+      FoodItem(name: "Red Bull", price: "3.50 €", image: "assets/product/redbull.png"),
+      FoodItem(name: "Thé", price: "2.00 €", image: "assets/product/thé.png"),
     ],
     "Sauces": [
-      FoodItem(name: "Mayonnaise", price: "1.00 €", image: foodImg),
-      FoodItem(name: "Ketchup", price: "1.00 €", image: foodImg),
-      FoodItem(name: "Blanche", price: "1.00 €", image: foodImg),
-      FoodItem(name: "Algérienne", price: "1.00 €", image: foodImg),
-      FoodItem(name: "Andalouse", price: "1.00 €", image: foodImg),
-      FoodItem(name: "Samouraï", price: "1.00 €", image: foodImg),
-      FoodItem(name: "Curry", price: "1.00 €", image: foodImg),
+      FoodItem(name: "Mayonnaise", price: "1.00 €", image: "assets/product/mayonaise.png"),
+      FoodItem(name: "Ketchup", price: "1.00 €", image: "assets/product/ketchup.png"),
+      FoodItem(name: "Blanche", price: "1.00 €", image: "assets/product/blanche.png"),
+      FoodItem(name: "Biggy Harissa Algérienne", price: "1.00 €", image: "assets/product/harissa.png"),
+      FoodItem(name: "Andalouse", price: "1.00 €", image: "assets/product/andalouse.png"),
+      FoodItem(name: "Samouraï", price: "1.00 €", image: "assets/product/samourai.png"),
+      FoodItem(name: "Brésilienne", price: "1.00 €", image: "assets/product/baberocue.png"),
+      FoodItem(name: "Curry", price: "1.00 €", image: "assets/product/biggy.png"),
+    ],
+      "Nos Assiettes": [
+      FoodItem(name: "Kebab", price: "11.50 €", image: "assets/product/Akebab.png"),
+      FoodItem(name: "Chiken", price: "11.50 €", image: "assets/product/Achiken.png"),
+      FoodItem(name: "Steak", price: "11.50 €", image: "assets/product/Asteak.png"),
+      FoodItem(name: "Mixte", price: "13.50 €", image: "assets/product/Amixte.png"),
+    ],
+    "Menu Enfant": [
+      FoodItem(name: "Cheese Burger", price: "2.50 €", image: "assets/product/burger.png"),
+      FoodItem(name: "Nuggets (5)", price: "2.50 €", image: "assets/product/texnugget.png"),
+      FoodItem(name: "Frites", price: "2.50 €", image: "assets/product/fritesenfant.png"),
+      FoodItem(name: "Capri", price: "2.50 €", image: "assets/product/capri.png"),
     ],
     "Suppléments": [
-      FoodItem(name: "Oeuf", price: "2.50 €", image: foodImg),
-      FoodItem(name: "Cheddar", price: "2.50 €", image: foodImg),
-      FoodItem(name: "Mozzarella", price: "2.50 €", image: foodImg),
-      FoodItem(name: "Chèvre", price: "2.50 €", image: foodImg),
-      FoodItem(name: "Galette Pomme de Terre", price: "2.50 €", image: foodImg),
+      FoodItem(name: "Steak", price: "2.50 €", image: "assets/product/ssteak.png"),
+      FoodItem(name: "Oeuf", price: "2.50 €", image: "assets/product/oeuf.png"),
+      FoodItem(name: "Cheddar", price: "2.50 €", image: "assets/product/cheddar.png"),
     ],
   };
+
+
+Widget _buildGridMenu() {
+  final items = menuData[categories[selectedIndex].name] ?? [];
+
+  return LayoutBuilder(
+    builder: (context, constraints) {
+      int crossAxisCount;
+
+      if (constraints.maxWidth > 1100) {
+        crossAxisCount = 4;
+      } else if (constraints.maxWidth > 800) {
+        crossAxisCount = 3;
+      } else {
+        crossAxisCount = 2;
+      }
+
+      return GridView.builder(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: crossAxisCount,
+          mainAxisSpacing: 15,
+          crossAxisSpacing: 10,
+          childAspectRatio: 1.6,
+        ),
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          final item = items[index];
+          return FoodCard(
+            image: item.image,
+            name: item.name,
+            price: item.price,
+            priceSolo: item.priceSolo,
+            priceFries: item.priceFries,
+            priceMenu: item.priceMenu,
+          );
+        },
+      );
+    },
+  );
+}
+
 
   @override
   void initState() {
@@ -466,44 +521,9 @@ SizedBox(
 
               /// Grid
               Expanded(
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    int crossAxisCount;
-
-                    if (constraints.maxWidth > 1100) {
-                      crossAxisCount = 4;
-                    } else if (constraints.maxWidth > 800) {
-                      crossAxisCount = 3;
-                    } else if (constraints.maxWidth > 500) {
-                      crossAxisCount = 2;
-                    } else {
-                      crossAxisCount = 2;
-                    }
-
-                    return GridView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: crossAxisCount,
-                        mainAxisSpacing: 15,
-                        crossAxisSpacing: 10,
-                        childAspectRatio: 1.6,
-                      ),
-itemCount: menuData[categories[selectedIndex].name]?.length ?? 0,
-itemBuilder: (context, index) {
-  final item = menuData[categories[selectedIndex].name]![index];
-  return FoodCard(
-    image: item.image,
-    name: item.name,
-    price: item.price,
-    priceSolo: item.priceSolo,
-    priceFries: item.priceFries,
-    priceMenu: item.priceMenu,
-  );
-},
-
-                    );
-                  },
-                ),
+                child: selectedCategory.name == "Tacos"
+                    ? const TacosBuilderSection()
+                    : _buildGridMenu(),
               )
             ],
           ),
